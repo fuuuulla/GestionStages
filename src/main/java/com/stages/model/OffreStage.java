@@ -3,7 +3,8 @@ package com.stages.model;
 import java.sql.Date;
 
 public class OffreStage {
-    private int id;
+	// private ne peut pas changer les valeurs directement il faut passer par les getters et setters
+    private int id; 
     private String titre;
     private String entreprise;
     private String description;

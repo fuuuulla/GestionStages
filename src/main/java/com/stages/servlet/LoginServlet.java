@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet("/login")
+@WebServlet("/login") 
 public class LoginServlet extends HttpServlet {
     private UserDAO userDAO = new UserDAO();
 
@@ -16,6 +16,7 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         request.getRequestDispatcher("login.jsp").forward(request, response);
+     
     }
 
     @Override

@@ -6,10 +6,10 @@ import java.sql.*;
 
 public class UserDAO {
     
-    public User authenticate(String email, String password) {
+    public User authenticate(String email, String password) { // tapez email et password pour authentifier
         String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DatabaseConnection.getConnection(); // tfth triq l mysql	
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, email);
@@ -18,7 +18,7 @@ public class UserDAO {
             ResultSet rs = stmt.executeQuery();
             
             if (rs.next()) {
-                User user = new User();
+                User user = new User(); // si trouvé, on crée un objet User vide et on le remplit
                 user.setId(rs.getInt("id"));
                 user.setNom(rs.getString("nom"));
                 user.setPrenom(rs.getString("prenom"));
@@ -32,7 +32,7 @@ public class UserDAO {
         return null;
     }
     
-    public java.util.List<User> getAllUsers() {
+    public java.util.List<User> getAllUsers() { // recupérer tous les utilisateurs
         java.util.List<User> list = new java.util.ArrayList<>();
         String sql = "SELECT * FROM users";
         

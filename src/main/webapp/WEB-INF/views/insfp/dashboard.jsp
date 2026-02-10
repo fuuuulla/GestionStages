@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Dashboard Admin</title>
+<title>Dashboard INSFP</title>
 
 <style>
 * {
@@ -23,7 +23,7 @@ body {
 
 /* ===== NAVBAR ===== */
 .navbar {
-    background: linear-gradient(135deg, #7f7fd5, #86a8e7);
+    background: linear-gradient(135deg, #2F3C7E, #1E2761);
     color: white;
     padding: 16px 32px;
     display: flex;
@@ -39,7 +39,6 @@ body {
 
 .navbar span {
     margin-right: 15px;
-    font-weight: 500;
 }
 
 .navbar a {
@@ -73,7 +72,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 25px;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 }
 
 .stat-card {
@@ -82,26 +81,19 @@ body {
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     text-align: center;
-    transition: 0.3s;
-}
-
-.stat-card:hover {
-    transform: translateY(-5px);
 }
 
 .stat-card h3 {
     font-size: 36px;
-    color: #ff6fae;
-    margin-bottom: 10px;
+    color: #F96167;
 }
 
 .stat-card p {
     font-size: 14px;
     color: #777;
-    font-weight: 500;
 }
 
-/* ===== FILTER BAR ===== */
+/* ===== FILTER ===== */
 .filter-bar {
     display: flex;
     gap: 15px;
@@ -127,7 +119,7 @@ table {
 }
 
 thead {
-    background: linear-gradient(135deg, #7f7fd5, #86a8e7);
+    background: linear-gradient(135deg, #2F3C7E, #1E2761);
     color: white;
 }
 
@@ -150,54 +142,31 @@ tbody tr:hover {
 /* ===== BADGES ===== */
 .badge {
     padding: 6px 16px;
-    border-radius: 30px;
+    border-radius: 20px;
     font-size: 12px;
-    font-weight: 700;
-    display: inline-block;
+    font-weight: 600;
 }
 
 .badge-en_attente {
-    background: linear-gradient(135deg,#ffe29f,#ffa99f);
-    color: #7a4a00;
+    background: #fff3cd;
+    color: #856404;
 }
 
 .badge-acceptee {
-    background: linear-gradient(135deg,#a8ff78,#78ffd6);
+    background: #d4edda;
     color: #155724;
 }
 
 .badge-refusee {
-    background: linear-gradient(135deg,#ff9a9e,#fecfef);
+    background: #f8d7da;
     color: #721c24;
-}
-
-/* ===== ACTION ===== */
-select {
-    padding: 6px 12px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-}
-
-.btn-update {
-    padding: 6px 14px;
-    background: linear-gradient(135deg,#ff6fae,#ff9bd3);
-    color: white;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: 0.3s;
-}
-
-.btn-update:hover {
-    transform: scale(1.05);
 }
 
 /* ===== EMPTY ===== */
 .no-candidatures {
-    background: white;
-    padding: 60px;
     text-align: center;
+    padding: 60px;
+    background: white;
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
@@ -207,15 +176,15 @@ select {
 <body>
 
 <div class="navbar">
-    <h1>👨‍💼 Dashboard Administrateur</h1>
+    <h1>📚 Dashboard INSFP Rahmania</h1>
     <div>
-        <span>Admin : ${sessionScope.user.prenom} ${sessionScope.user.nom}</span>
+        <span>INSFP : ${sessionScope.user.prenom} ${sessionScope.user.nom}</span>
         <a href="${pageContext.request.contextPath}/logout">Déconnexion</a>
     </div>
 </div>
 
 <div class="container">
-    <h2 class="page-title">Gestion des Candidatures</h2>
+    <h2 class="page-title">Consultation des Candidatures</h2>
 
     <!-- ===== STATS ===== -->
     <div class="stats">
@@ -226,13 +195,13 @@ select {
 
         <div class="stat-card">
             <h3>
-                <c:set var="enAttente" value="0"/>
+                <c:set var="att" value="0"/>
                 <c:forEach items="${candidatures}" var="c">
                     <c:if test="${c.statut == 'en_attente'}">
-                        <c:set var="enAttente" value="${enAttente + 1}"/>
+                        <c:set var="att" value="${att + 1}"/>
                     </c:if>
                 </c:forEach>
-                ${enAttente}
+                ${att}
             </h3>
             <p>En attente</p>
         </div>
@@ -286,16 +255,14 @@ select {
         <c:otherwise>
             <table>
                 <thead>
-                <tr>
-                    <th>Étudiant</th>
-                    <th>Offre</th>
-                    <th>Entreprise</th>
-                    <th>Date</th>
-                    <th>Statut</th>
-                    <th>Action</th>
-                </tr>
+                    <tr>
+                        <th>Étudiant</th>
+                        <th>Offre</th>
+                        <th>Entreprise</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                    </tr>
                 </thead>
-
                 <tbody>
                 <c:forEach items="${candidatures}" var="cand">
                     <tr>
@@ -314,17 +281,6 @@ select {
                                 </c:choose>
                             </span>
                         </td>
-                        <td>
-                            <form action="${pageContext.request.contextPath}/admin/update-statut" method="post">
-                                <input type="hidden" name="candidatureId" value="${cand.id}">
-                                <select name="statut">
-                                    <option value="en_attente" ${cand.statut=='en_attente'?'selected':''}>En attente</option>
-                                    <option value="acceptee" ${cand.statut=='acceptee'?'selected':''}>Acceptée</option>
-                                    <option value="refusee" ${cand.statut=='refusee'?'selected':''}>Refusée</option>
-                                </select>
-                                <button class="btn-update">✓ Mettre à jour</button>
-                            </form>
-                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -333,35 +289,27 @@ select {
     </c:choose>
 </div>
 
-<!-- ===== JS ===== -->
+<!-- ===== JS FILTER ===== -->
 <script>
 const searchInput = document.getElementById("searchInput");
 const filterStatus = document.getElementById("filterStatus");
 const rows = document.querySelectorAll("tbody tr");
 
 function filterTable(){
-    const s = searchInput.value.toLowerCase();
-    const f = filterStatus.value;
+    const search = searchInput.value.toLowerCase();
+    const status = filterStatus.value;
 
-    rows.forEach(r=>{
-        const text = r.innerText.toLowerCase();
-        const badge = r.querySelector(".badge").className;
-        const okSearch = text.includes(s);
-        const okStatus = f==="" || badge.includes(f);
-        r.style.display = okSearch && okStatus ? "" : "none";
+    rows.forEach(row=>{
+        const text = row.innerText.toLowerCase();
+        const badge = row.querySelector(".badge").className;
+        const okSearch = text.includes(search);
+        const okStatus = status === "" || badge.includes(status);
+        row.style.display = okSearch && okStatus ? "" : "none";
     });
 }
 
 searchInput.addEventListener("keyup", filterTable);
 filterStatus.addEventListener("change", filterTable);
-
-document.querySelectorAll("form").forEach(f=>{
-    f.addEventListener("submit", e=>{
-        if(!confirm("Confirmer la modification du statut ?")){
-            e.preventDefault();
-        }
-    });
-});
 </script>
 
 </body>

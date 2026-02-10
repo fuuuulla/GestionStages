@@ -5,43 +5,65 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-@WebFilter({"/etudiant/*", "/admin/*"})
+@WebFilter({"/etudiant/*", "/admin/*", "/insfp/*"})
 public class AuthFilter implements Filter {
 
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-        
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        HttpSession session = httpRequest.getSession(false);
 
-        boolean isLoggedIn = (session != null && session.getAttribute("user") != null);
-        String requestURI = httpRequest.getRequestURI();
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+	        throws IOException, ServletException {
 
-        if (!isLoggedIn) {
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
-            return;
-        }
+	    HttpServletRequest req = (HttpServletRequest) request;
+	    HttpServletResponse res = (HttpServletResponse) response;
+	    HttpSession session = req.getSession(false);
 
-        String role = (String) session.getAttribute("role");
-        
-        if (requestURI.contains("/admin/") && !"admin".equals(role)) {
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/etudiant/offres");
-            return;
-        }
-        
-        if (requestURI.contains("/etudiant/") && !"etudiant".equals(role)) {
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/admin/dashboard");
-            return;
-        }
+	    if (session == null || session.getAttribute("user") == null) {
+	        res.sendRedirect(req.getContextPath() + "/login");
+	        return;
+	    }
 
-        chain.doFilter(request, response);
-    }
+	    String role = (String) session.getAttribute("role");
+	    String uri = req.getRequestURI();
+	    String ctx = req.getContextPath();
 
-    @Override
-    public void init(FilterConfig filterConfig) {}
+	    // ADMIN
+	    if (uri.startsWith(ctx + "/admin") && !"admin".equals(role)) {
+	        redirectByRole(req, res, role);
+	        return;
+	    }
 
-    @Override
-    public void destroy() {}
+	    // ETUDIANT
+	    if (uri.startsWith(ctx + "/etudiant") && !"etudiant".equals(role)) {
+	        redirectByRole(req, res, role);
+	        return;
+	    }
+
+	    // INSFP
+	    if (uri.startsWith(ctx + "/insfp") && !"insfp".equals(role)) {
+	        redirectByRole(req, res, role);
+	        return;
+	    }
+
+	    chain.doFilter(request, response);
+	}
+
+	private void redirectByRole(HttpServletRequest req, HttpServletResponse res, String role)
+	        throws IOException {
+
+	    String ctx = req.getContextPath();
+
+	    switch (role) {
+	        case "admin":
+	            res.sendRedirect(ctx + "/admin/dashboard");
+	            break;
+	        case "etudiant":
+	            res.sendRedirect(ctx + "/etudiant/offres");
+	            break;
+	        case "insfp":
+	            res.sendRedirect(ctx + "/insfp/dashboard");
+	            break;
+	        default:
+	            res.sendRedirect(ctx + "/login");
+	    }
+	}
 }

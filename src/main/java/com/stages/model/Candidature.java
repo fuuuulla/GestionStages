@@ -1,8 +1,8 @@
 package com.stages.model;
 
-import java.sql.Timestamp;
+import java.sql.Timestamp; // Importation de la classe Timestamp pour gérer les dates et heures
 
-public class Candidature {
+public class Candidature { 
     private int id;
     private int etudiantId;
     private int offreId;
@@ -14,14 +14,14 @@ public class Candidature {
     private String titreOffre;
     private String entreprise;
 
-    public Candidature() {}
+    public Candidature() {} 
 
-    public int getId() {
+    public int getId() { 
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int id) { 
+        this.id = id; 
     }
 
     public int getEtudiantId() {

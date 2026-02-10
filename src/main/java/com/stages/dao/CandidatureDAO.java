@@ -1,12 +1,13 @@
 package com.stages.dao;
 
-import com.stages.model.Candidature;
+import com.stages.model.Candidature; 
 import com.stages.util.DatabaseConnection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CandidatureDAO {
+	
     
     public boolean postuler(int etudiantId, int offreId) {
         if (hasAlreadyApplied(etudiantId, offreId)) {

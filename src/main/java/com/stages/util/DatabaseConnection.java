@@ -10,8 +10,9 @@ public class DatabaseConnection {
     private static final String USER = "root";
     private static final String PASSWORD = "";  // Laissez vide pour XAMPP
     
-    public static Connection getConnection() throws SQLException {
-        try {
+    public static Connection getConnection() throws SQLException { // DAO utilise cette méthode pour controller l'erreur
+        try { // Charger le driver MySQL
+        	
             Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException e) {
@@ -20,13 +21,13 @@ public class DatabaseConnection {
     }
     
     // Méthode de test
-    public static void main(String[] args) {
+    public static void main(String[] args) { // test de connexion local
         try {
-            Connection conn = getConnection();
-            System.out.println("✅ Connexion réussie à la base de données !");
+            Connection conn = getConnection(); 
+            System.out.println("✅ Connexion réussie à la base de données !"); 
             conn.close();
         } catch (SQLException e) {
-            System.out.println("❌ Erreur de connexion : " + e.getMessage());
+            System.out.println("❌ Erreur de connexion : " + e.getMessage()); 
         }
     }
 }

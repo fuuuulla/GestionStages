@@ -1,6 +1,6 @@
 package com.stages.model;
 
-public class User {
+public class User { // model li bech n7otou fih les utilisateurs li rahou fi database
     private int id;
     private String nom;
     private String prenom;
@@ -8,9 +8,9 @@ public class User {
     private String password;
     private String role;
 
-    public User() {}
+    public User() {} // constructeur vide
 
-    public User(int id, String nom, String prenom, String email, String password, String role) {
+    public User(int id, String nom, String prenom, String email, String password, String role) { 
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -19,7 +19,7 @@ public class User {
         this.role = role;
     }
 
-    public int getId() {
+    public int getId() { //
         return id;
     }
 
@@ -47,19 +47,19 @@ public class User {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email) { // setter tbdl les valeurs
         this.email = email;
     }
 
-    public String getPassword() {
+    public String getPassword() { // getter yjib les valeurs
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password) { 
         this.password = password;
     }
 
-    public String getRole() {
+    public String getRole() { 
         return role;
     }
 

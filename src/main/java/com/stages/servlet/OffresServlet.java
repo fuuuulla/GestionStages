@@ -1,13 +1,13 @@
 package com.stages.servlet;
 
-import com.stages.dao.OffreStageDAO;
+import com.stages.dao.OffreStageDAO; 
 import com.stages.dao.CandidatureDAO;
 import com.stages.model.OffreStage;
 import com.stages.model.Candidature;
 import com.stages.model.User;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+import javax.servlet.annotation.WebServlet; 
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
